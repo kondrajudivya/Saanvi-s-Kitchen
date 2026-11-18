@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout & Online Orders — SAANVI'S KITCHEN</title>
+  <meta name="description" content="Checkout and place your online food order with SAANVI'S KITCHEN. Dine-in, Takeaway, and Home Delivery supported. Instant order confirmation and WhatsApp ordering.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice-bar">
+    <div>
+      <span>📍 Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru</span>
+    </div>
+    <div style="display: flex; gap: 18px; align-items: center;">
+      <span>📞 Restaurant Contact: <a href="tel:9494608182" data-link="phone">9494608182</a></span>
+      <span>💬 WhatsApp: <a href="https://wa.me/919494608182" data-link="whatsapp" target="_blank" rel="noopener noreferrer">+91 9494608182</a></span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="brand-container">
+      <div class="brand-logo-icon">🍲</div>
+      <div class="brand-info">
+        <a href="index.html" class="brand-title" data-setting="restaurant_name">SAANVI'S KITCHEN</a>
+        <span class="brand-tagline" data-setting="tagline">Authentic Taste, Made With Love</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="menu.html" class="nav-link">Menu & Order</a></li>
+      <li><a href="reservation.html" class="nav-link">Table Reservation</a></li>
+      <li><a href="checkout.html" class="nav-link active">Online Checkout</a></li>
+      <li><a href="order-tracking.html" class="nav-link">Track Order</a></li>
+      <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="tel:9494608182" class="btn-call-header" data-link="phone">
+        <span>📞</span>
+        <span class="btn-phone-text">9494608182</span>
+      </a>
+
+      <a href="https://wa.me/919494608182" class="btn-whatsapp-header" data-link="whatsapp" target="_blank" rel="noopener noreferrer">
+        <span>💬</span>
+        <span>WhatsApp</span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle Navigation">☰</button>
+    </div>
+  </header>
+
+  <!-- Checkout Section -->
+  <main class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-subtitle">Complete Your Order</p>
+        <h1 class="section-title">Order Checkout</h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 8px auto 0;">
+          Select your dining preference, enter contact details, and choose between direct online order submission or instant WhatsApp ordering.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; align-items: start;">
+        
+        <!-- Left Column: Order Type & Customer Details Form -->
+        <div class="form-card" style="margin: 0; max-width: 100%;">
+          <form id="checkoutForm">
+
+            <!-- 1. Order Type Selection (Dine-in, Takeaway, Home Delivery) -->
+            <div class="form-group" style="margin-bottom: 24px;">
+              <label class="form-label">
+                <span>Select Order Type</span>
+                <span class="required">*</span>
+              </label>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 6px;">
+                <label style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: 1px solid var(--border-light); border-radius: 8px; cursor: pointer; font-weight: 700; background: var(--bg-main);" id="typeLabelTakeaway">
+                  <input type="radio" name="orderType" value="Takeaway" checked style="accent-color: var(--primary);">
+                  <span>🛍️ Takeaway</span>
+                </label>
+
+                <label style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: 1px solid var(--border-light); border-radius: 8px; cursor: pointer; font-weight: 700; background: var(--bg-main);" id="typeLabelDineIn">
+                  <input type="radio" name="orderType" value="Dine-in" style="accent-color: var(--primary);">
+                  <span>🪑 Dine-in</span>
+                </label>
+
+                <label style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: 1px solid var(--border-light); border-radius: 8px; cursor: pointer; font-weight: 700; background: var(--bg-main);" id="typeLabelDelivery">
+                  <input type="radio" name="orderType" value="Home Delivery" style="accent-color: var(--primary);">
+                  <span>🛵 Delivery</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Customer Details -->
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="checkoutName" class="form-label">
+                  <span>Your Full Name</span>
+                  <span class="required">*</span>
+                </label>
+                <input type="text" id="checkoutName" class="form-control" placeholder="e.g. Anand Kumar" required>
+              </div>
+
+              <div class="form-group">
+                <label for="checkoutPhone" class="form-label">
+                  <span>Mobile Number (10 digits)</span>
+                  <span class="required">*</span>
+                </label>
+                <input type="tel" id="checkoutPhone" class="form-control" placeholder="e.g. 9494608182" maxlength="10" required>
+              </div>
+            </div>
+
+            <!-- Conditional Field: Dine-in Table Number -->
+            <div class="form-group" id="tableNoField" style="display: none; margin-bottom: 20px;">
+              <label for="tableNumber" class="form-label">
+                <span>Dine-in Table Number</span>
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="tableNumber" class="form-control" placeholder="e.g. Table 4 / Garden 2">
+            </div>
+
+            <!-- Conditional Field: Delivery Address -->
+            <div class="form-group" id="deliveryAddressField" style="display: none; margin-bottom: 20px;">
+              <label for="deliveryAddress" class="form-label">
+                <span>Complete Delivery Address (in Bengaluru)</span>
+                <span class="required">*</span>
+              </label>
+              <textarea id="deliveryAddress" class="form-control" placeholder="Flat No, Building Name, Street / Cross, Landmark, Madiwala, Bengaluru"></textarea>
+            </div>
+
+            <!-- Cooking Instructions -->
+            <div class="form-group" style="margin-bottom: 20px;">
+              <label for="specialNotes" class="form-label">
+                <span>Cooking / Packaging Instructions (Optional)</span>
+              </label>
+              <input type="text" id="specialNotes" class="form-control" placeholder="e.g. Medium spicy, extra raita, less oil...">
+            </div>
+
+            <!-- Payment Method -->
+            <div class="form-group" style="margin-bottom: 24px;">
+              <label class="form-label">
+                <span>Select Payment Method</span>
+              </label>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label style="display: flex; align-items: center; gap: 10px; font-weight: 600; padding: 10px; border: 1px solid var(--border-light); border-radius: 8px; cursor: pointer;">
+                  <input type="radio" name="paymentMethod" value="Cash / Pay at Counter" checked style="accent-color: var(--primary);">
+                  <span>💵 Cash on Delivery / Pay at Restaurant Counter</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; font-weight: 600; padding: 10px; border: 1px solid var(--border-light); border-radius: 8px; cursor: pointer;">
+                  <input type="radio" name="paymentMethod" value="UPI / QR Code" style="accent-color: var(--primary);">
+                  <span>📱 UPI QR Code (GPay / PhonePe / Paytm at Counter or Delivery)</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Error Box -->
+            <div id="checkoutAlertBox" style="display: none; padding: 14px; border-radius: 8px; margin-bottom: 20px; font-weight: 600;"></div>
+
+            <!-- Action Buttons: Online Submit & WhatsApp Order -->
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <button type="submit" id="submitOrderBtn" class="btn-primary" style="justify-content: center; width: 100%; padding: 14px;">
+                <span>🚀 Place Order & Confirm</span>
+              </button>
+
+              <button type="button" id="whatsappOrderBtn" class="btn-whatsapp-cta" style="justify-content: center; width: 100%; padding: 14px;">
+                <span>💬 Order via WhatsApp (Pre-filled Message)</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Right Column: Cart Itemized Breakdown -->
+        <div class="form-card" style="margin: 0; max-width: 100%; background: #ffffff;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border-light);">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-dark);">Your Cart Items</h3>
+            <a href="menu.html" style="font-size: 0.88rem; color: var(--primary); font-weight: 700;">+ Add More Dishes</a>
+          </div>
+
+          <div id="checkoutCartItemsList" style="margin-bottom: 20px;">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <div style="background: var(--bg-alt); padding: 16px; border-radius: 12px; border: 1px solid var(--border-light);">
+            <div class="details-row">
+              <span class="details-label">Subtotal</span>
+              <span class="details-val" id="summarySubtotal">₹0</span>
+            </div>
+            <div class="details-row">
+              <span class="details-label">GST Taxes (5%)</span>
+              <span class="details-val" id="summaryTax">₹0</span>
+            </div>
+            <div class="details-row" id="deliveryFeeRow" style="display: none;">
+              <span class="details-label">Home Delivery Charge</span>
+              <span class="details-val" id="summaryDeliveryFee">₹30</span>
+            </div>
+            <div class="details-row" style="border-top: 2px dashed var(--border-light); margin-top: 8px; padding-top: 12px; font-size: 1.15rem;">
+              <span style="font-weight: 800; color: var(--text-dark);">Final Order Total</span>
+              <span style="font-weight: 900; color: var(--primary); font-size: 1.3rem;" id="summaryGrandTotal">₹0</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; text-align: center;">
+            <p>Questions about items or preparation time?</p>
+            <p>Call our kitchen: <a href="tel:9494608182" data-link="phone" style="color: var(--primary); font-weight: 700;">9494608182</a></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 data-setting="restaurant_name">SAANVI'S KITCHEN</h3>
+          <p class="tagline" data-setting="tagline">Authentic Taste, Made With Love</p>
+          <p style="font-size: 0.9rem; line-height: 1.6; color: #9ca3af;">
+            Serving genuine South Indian delicacies and royal Hyderabadi dum biryanis in Madiwala, Bengaluru.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Contact & Location</h4>
+          <div class="footer-contact-item">
+            <span>📞</span>
+            <div>
+              <strong style="color: white; display: block;">Restaurant Contact:</strong>
+              <a href="tel:9494608182" data-link="phone" data-show-number="true">9494608182</a>
+            </div>
+          </div>
+
+          <div class="footer-contact-item">
+            <span>💬</span>
+            <div>
+              <strong style="color: white; display: block;">WhatsApp:</strong>
+              <a href="https://wa.me/919494608182" data-link="whatsapp" target="_blank" rel="noopener noreferrer">+91 9494608182</a>
+            </div>
+          </div>
+
+          <div class="footer-contact-item">
+            <span>📍</span>
+            <div>
+              <strong style="color: white; display: block;">Address:</strong>
+              <span data-setting="address">Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru, Karnataka, India.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 <strong data-setting="restaurant_name">SAANVI'S KITCHEN</strong>. All rights reserved. | Contact: 9494608182</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    function renderCheckoutCart() {
+      const listEl = document.getElementById('checkoutCartItemsList');
+      const subtotalEl = document.getElementById('summarySubtotal');
+      const taxEl = document.getElementById('summaryTax');
+      const deliveryRow = document.getElementById('deliveryFeeRow');
+      const grandTotalEl = document.getElementById('summaryGrandTotal');
+
+      const { cart, subtotal, tax } = getCartCalculations();
+      const orderType = document.querySelector('input[name="orderType"]:checked')?.value || 'Takeaway';
+      const deliveryFee = orderType === 'Home Delivery' ? 30.00 : 0.00;
+      const finalTotal = subtotal + tax + deliveryFee;
+
+      if (deliveryRow) {
+        deliveryRow.style.display = orderType === 'Home Delivery' ? 'flex' : 'none';
+      }
+
+      if (cart.length === 0) {
+        listEl.innerHTML = `
+          <div style="text-align: center; padding: 30px 10px; color: var(--text-muted);">
+            <p>Your cart is empty.</p>
+            <a href="menu.html" class="btn-primary" style="margin-top: 12px; display: inline-flex;">Browse Menu</a>
+          </div>
+        `;
+        subtotalEl.textContent = '₹0';
+        taxEl.textContent = '₹0';
+        grandTotalEl.textContent = '₹0';
+        return;
+      }
+
+      listEl.innerHTML = cart.map(item => `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-light);">
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem;">${item.name}</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">₹${item.price} × ${item.quantity} = <strong>₹${item.price * item.quantity}</strong></div>
+          </div>
+          <div class="qty-control">
+            <button type="button" class="qty-btn" onclick="updateCartQuantity('${item.id}', -1); renderCheckoutCart();">−</button>
+            <span class="qty-val">${item.quantity}</span>
+            <button type="button" class="qty-btn" onclick="updateCartQuantity('${item.id}', 1); renderCheckoutCart();">+</button>
+          </div>
+        </div>
+      `).join('');
+
+      subtotalEl.textContent = `₹${subtotal}`;
+      taxEl.textContent = `₹${tax}`;
+      grandTotalEl.textContent = `₹${finalTotal}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCheckoutCart();
+
+      // Order type changes
+      const orderTypeRadios = document.querySelectorAll('input[name="orderType"]');
+      const tableField = document.getElementById('tableNoField');
+      const deliveryField = document.getElementById('deliveryAddressField');
+
+      orderTypeRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          const val = radio.value;
+          tableField.style.display = val === 'Dine-in' ? 'flex' : 'none';
+          deliveryField.style.display = val === 'Home Delivery' ? 'flex' : 'none';
+          renderCheckoutCart();
+        });
+      });
+
+      // WhatsApp Order Button Trigger
+      document.getElementById('whatsappOrderBtn').addEventListener('click', () => {
+        const orderType = document.querySelector('input[name="orderType"]:checked')?.value || 'Takeaway';
+        const name = document.getElementById('checkoutName').value.trim();
+        const address = document.getElementById('deliveryAddress').value.trim();
+        const table = document.getElementById('tableNumber').value.trim();
+
+        const result = generateWhatsAppOrderMessage(orderType, name, address, table);
+        if (result) {
+          window.open(result.url, '_blank', 'noopener,noreferrer');
+        }
+      });
+
+      // Form submission for Online Order
+      const form = document.getElementById('checkoutForm');
+      const alertBox = document.getElementById('checkoutAlertBox');
+      const submitBtn = document.getElementById('submitOrderBtn');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        alertBox.style.display = 'none';
+
+        const { cart } = getCartCalculations();
+        if (cart.length === 0) {
+          alertBox.style.display = 'block';
+          alertBox.style.background = '#fef2f2';
+          alertBox.style.color = '#dc2626';
+          alertBox.style.border = '1px solid #fecaca';
+          alertBox.innerHTML = '⚠️ Your cart is empty. Please select food items from the menu first.';
+          return;
+        }
+
+        const orderType = document.querySelector('input[name="orderType"]:checked')?.value || 'Takeaway';
+        const name = document.getElementById('checkoutName').value.trim();
+        const phone = document.getElementById('checkoutPhone').value.trim().replace(/\D/g, '');
+        const tableNo = document.getElementById('tableNumber').value.trim();
+        const address = document.getElementById('deliveryAddress').value.trim();
+        const specialNotes = document.getElementById('specialNotes').value.trim();
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'Cash / Pay at Counter';
+
+        if (phone.length < 10) {
+          alertBox.style.display = 'block';
+          alertBox.style.background = '#fef2f2';
+          alertBox.style.color = '#dc2626';
+          alertBox.style.border = '1px solid #fecaca';
+          alertBox.innerHTML = '⚠️ Please enter a valid 10-digit mobile number.';
+          return;
+        }
+
+        if (orderType === 'Dine-in' && !tableNo) {
+          alertBox.style.display = 'block';
+          alertBox.style.background = '#fef2f2';
+          alertBox.style.color = '#dc2626';
+          alertBox.style.border = '1px solid #fecaca';
+          alertBox.innerHTML = '⚠️ Please enter your Dine-in table number.';
+          return;
+        }
+
+        if (orderType === 'Home Delivery' && !address) {
+          alertBox.style.display = 'block';
+          alertBox.style.background = '#fef2f2';
+          alertBox.style.color = '#dc2626';
+          alertBox.style.border = '1px solid #fecaca';
+          alertBox.innerHTML = '⚠️ Please provide a delivery address for Home Delivery.';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Placing Your Order...</span>';
+
+        try {
+          const res = await fetch('/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              order_type: orderType,
+              customer_name: name,
+              customer_phone: phone,
+              delivery_address: address,
+              table_number: tableNo,
+              items: cart,
+              payment_method: paymentMethod,
+              special_instructions: specialNotes
+            })
+          });
+
+          const data = await res.json();
+
+          if (res.status === 201 && data.success) {
+            clearCart();
+            sessionStorage.setItem('lastOrder', JSON.stringify({
+              order: data.order,
+              restaurant: data.restaurant
+            }));
+            window.location.href = `order-confirmation.html?code=${data.order.order_code}`;
+          } else {
+            alertBox.style.display = 'block';
+            alertBox.style.background = '#fef2f2';
+            alertBox.style.color = '#dc2626';
+            alertBox.style.border = '1px solid #fecaca';
+            alertBox.innerHTML = `⚠️ ${data.message || 'Error processing order.'}`;
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>🚀 Place Order & Confirm</span>';
+          }
+        } catch (err) {
+          alertBox.style.display = 'block';
+          alertBox.style.background = '#fef2f2';
+          alertBox.style.color = '#dc2626';
+          alertBox.style.border = '1px solid #fecaca';
+          alertBox.innerHTML = '⚠️ Network connection issue. Please retry or call directly: 9494608182';
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>🚀 Place Order & Confirm</span>';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed — SAANVI'S KITCHEN</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice-bar">
+    <div>
+      <span>📍 Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru</span>
+    </div>
+    <div style="display: flex; gap: 18px; align-items: center;">
+      <span>📞 Restaurant Contact: <a href="tel:9494608182" data-link="phone">9494608182</a></span>
+      <span>💬 WhatsApp: <a href="https://wa.me/919494608182" data-link="whatsapp" target="_blank" rel="noopener noreferrer">+91 9494608182</a></span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="brand-container">
+      <div class="brand-logo-icon">🍲</div>
+      <div class="brand-info">
+        <a href="index.html" class="brand-title" data-setting="restaurant_name">SAANVI'S KITCHEN</a>
+        <span class="brand-tagline" data-setting="tagline">Authentic Taste, Made With Love</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="menu.html" class="nav-link">Menu & Order</a></li>
+      <li><a href="reservation.html" class="nav-link">Table Reservation</a></li>
+      <li><a href="checkout.html" class="nav-link">Online Checkout</a></li>
+      <li><a href="order-tracking.html" class="nav-link">Track Order</a></li>
+      <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="tel:9494608182" class="btn-call-header" data-link="phone">
+        <span>📞</span>
+        <span class="btn-phone-text">9494608182</span>
+      </a>
+
+      <a href="https://wa.me/919494608182" class="btn-whatsapp-header" data-link="whatsapp" target="_blank" rel="noopener noreferrer">
+        <span>💬</span>
+        <span>WhatsApp</span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle Navigation">☰</button>
+    </div>
+  </header>
+
+  <!-- Confirmation Main Content -->
+  <main class="container" style="padding: 40px 20px;">
+    <div class="confirmation-container">
+      <div class="success-badge-icon">✓</div>
+      <h1 class="confirmation-title">Your Order Has Been Placed!</h1>
+      <p class="confirmation-subtitle">
+        Our chefs at <strong data-setting="restaurant_name">SAANVI'S KITCHEN</strong> are preparing your authentic delicacies with love.
+      </p>
+
+      <!-- Order Summary Box -->
+      <div class="details-box">
+        <div class="details-row">
+          <span class="details-label">Order Reference Code</span>
+          <span class="details-val" id="ordCode" style="color: var(--primary); font-size: 1.15rem;">SK-ORD-PENDING</span>
+        </div>
+        <div class="details-row">
+          <span class="details-label">Order Type</span>
+          <span class="details-val" id="ordType" style="color: var(--secondary);">Takeaway</span>
+        </div>
+        <div class="details-row">
+          <span class="details-label">Customer Name</span>
+          <span class="details-val" id="ordCustomer">—</span>
+        </div>
+        <div class="details-row">
+          <span class="details-label">Contact Mobile</span>
+          <span class="details-val" id="ordPhone">—</span>
+        </div>
+        <div class="details-row" id="ordLocationRow">
+          <span class="details-label" id="ordLocationLabel">Pickup / Table / Address</span>
+          <span class="details-val" id="ordLocationVal">Kitchen Counter</span>
+        </div>
+
+        <!-- Line Items -->
+        <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border-light);">
+          <strong style="display: block; margin-bottom: 8px; color: var(--text-dark);">Items Ordered:</strong>
+          <div id="ordItemsList" style="font-size: 0.92rem;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <div class="details-row" style="margin-top: 10px; border-top: 1px solid var(--border-light); padding-top: 10px;">
+          <span class="details-label" style="font-weight: 800; font-size: 1.05rem; color: var(--text-dark);">Grand Total</span>
+          <span class="details-val" id="ordGrandTotal" style="font-size: 1.2rem; color: var(--primary);">₹0</span>
+        </div>
+        <div class="details-row">
+          <span class="details-label">Payment Method</span>
+          <span class="details-val" id="ordPayment">Cash / Pay at Counter</span>
+        </div>
+      </div>
+
+      <!-- CRITICAL REQUIREMENT: Display Restaurant Contact Number in Order Confirmation -->
+      <div class="restaurant-contact-callout">
+        <h4>📞 Restaurant Contact Number</h4>
+        <p style="margin-bottom: 10px;">
+          For order updates, special instructions, or assistance, call our kitchen directly:
+        </p>
+        <p style="font-size: 1.35rem; font-weight: 800; margin-bottom: 12px;">
+          <a href="tel:9494608182" data-link="phone" style="color: var(--primary); text-decoration: underline;">
+            📞 9494608182
+          </a>
+        </p>
+        <p style="font-size: 0.88rem; color: #166534;">
+          Restaurant Address: <span data-setting="address">Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru</span>
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
+          <a href="order-tracking.html" id="trackOrderBtn" class="btn-primary" style="font-size: 0.92rem; padding: 10px 22px;">
+            <span>📍 Track Live Order Status</span>
+          </a>
+
+          <a href="tel:9494608182" class="btn-call-header" data-link="phone" style="font-size: 0.92rem; padding: 10px 22px;">
+            <span>📞 Call Restaurant: 9494608182</span>
+          </a>
+
+          <a href="https://wa.me/919494608182" class="btn-whatsapp-header" data-link="whatsapp" target="_blank" rel="noopener noreferrer" style="font-size: 0.92rem; padding: 10px 22px;">
+            <span>💬 WhatsApp Us</span>
+          </a>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <a href="index.html" class="btn-secondary" style="color: var(--text-dark); border-color: var(--border-light); background: var(--bg-alt);">
+          <span>← Back to Home</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 data-setting="restaurant_name">SAANVI'S KITCHEN</h3>
+          <p class="tagline" data-setting="tagline">Authentic Taste, Made With Love</p>
+          <p style="font-size: 0.9rem; line-height: 1.6; color: #9ca3af;">
+            Serving genuine South Indian delicacies and royal Hyderabadi dum biryanis in Madiwala, Bengaluru.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Contact & Location</h4>
+          <div class="footer-contact-item">
+            <span>📞</span>
+            <div>
+              <strong style="color: white; display: block;">Restaurant Contact:</strong>
+              <a href="tel:9494608182" data-link="phone">9494608182</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <span>💬</span>
+            <div>
+              <strong style="color: white; display: block;">WhatsApp:</strong>
+              <a href="https://wa.me/919494608182" data-link="whatsapp" target="_blank" rel="noopener noreferrer">+91 9494608182</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <span>📍</span>
+            <div>
+              <strong style="color: white; display: block;">Address:</strong>
+              <span data-setting="address">Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru, Karnataka, India.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 <strong data-setting="restaurant_name">SAANVI'S KITCHEN</strong>. All rights reserved. | Contact: 9494608182</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const stored = sessionStorage.getItem('lastOrder');
+      if (stored) {
+        try {
+          const { order, restaurant } = JSON.parse(stored);
+          if (order) {
+            document.getElementById('ordCode').textContent = order.order_code;
+            document.getElementById('ordType').textContent = order.order_type;
+            document.getElementById('ordCustomer').textContent = order.customer_name;
+            document.getElementById('ordPhone').textContent = order.customer_phone;
+            document.getElementById('ordGrandTotal').textContent = `₹${order.total_amount}`;
+            document.getElementById('ordPayment').textContent = order.payment_method || 'Cash / Pay at Counter';
+
+            // Location
+            const locLabel = document.getElementById('ordLocationLabel');
+            const locVal = document.getElementById('ordLocationVal');
+            if (order.order_type === 'Dine-in') {
+              locLabel.textContent = 'Table Number';
+              locVal.textContent = order.table_number || 'Dine-in Table';
+            } else if (order.order_type === 'Home Delivery') {
+              locLabel.textContent = 'Delivery Address';
+              locVal.textContent = order.delivery_address || 'Bengaluru';
+            } else {
+              locLabel.textContent = 'Pickup Method';
+              locVal.textContent = 'Takeaway Counter';
+            }
+
+            // Items
+            const itemsList = document.getElementById('ordItemsList');
+            if (order.items && order.items.length > 0) {
+              itemsList.innerHTML = order.items.map(item => `
+                <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                  <span>${item.name} × ${item.quantity}</span>
+                  <strong>₹${item.total || (item.price * item.quantity)}</strong>
+                </div>
+              `).join('');
+            }
+
+            // Tracking link
+            document.getElementById('trackOrderBtn').href = `order-tracking.html?orderId=${order.order_code}`;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        if (code) {
+          document.getElementById('ordCode').textContent = code;
+          document.getElementById('trackOrderBtn').href = `order-tracking.html?orderId=${code}`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

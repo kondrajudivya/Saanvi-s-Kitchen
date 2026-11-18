@@ -1,0 +1,31 @@
+{
+  "name": "saanvis-kitchen",
+  "version": "1.0.0",
+  "description": "Saanvi's Kitchen — Authentic Taste, Made With Love. Dine-in, Table Reservations, Online Orders & WhatsApp Ordering Platform.",
+  "main": "server/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "seed": "node server/database/seed.js",
+    "test": "node tests/system.test.js"
+  },
+  "keywords": [
+    "restaurant",
+    "food-ordering",
+    "table-reservations",
+    "whatsapp-ordering",
+    "bengaluru",
+    "saanvis-kitchen"
+  ],
+  "author": "Saanvi's Kitchen Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.12.0"
+  }
+}

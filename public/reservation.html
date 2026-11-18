@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dine-in & Table Reservations — SAANVI'S KITCHEN</title>
+  <meta name="description" content="Reserve a table for Dine-in at SAANVI'S KITCHEN in Madiwala, Bengaluru. Enjoy authentic South Indian meals and dum biryanis with loved ones.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice-bar">
+    <div>
+      <span>📍 Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru</span>
+    </div>
+    <div style="display: flex; gap: 18px; align-items: center;">
+      <span>📞 Restaurant Contact: <a href="tel:9494608182" data-link="phone">9494608182</a></span>
+      <span>💬 WhatsApp: <a href="https://wa.me/919494608182" data-link="whatsapp" target="_blank" rel="noopener noreferrer">+91 9494608182</a></span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="brand-container">
+      <div class="brand-logo-icon">🍲</div>
+      <div class="brand-info">
+        <a href="index.html" class="brand-title" data-setting="restaurant_name">SAANVI'S KITCHEN</a>
+        <span class="brand-tagline" data-setting="tagline">Authentic Taste, Made With Love</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="menu.html" class="nav-link">Menu & Order</a></li>
+      <li><a href="reservation.html" class="nav-link active">Table Reservation</a></li>
+      <li><a href="checkout.html" class="nav-link">Online Checkout</a></li>
+      <li><a href="order-tracking.html" class="nav-link">Track Order</a></li>
+      <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+      <li><a href="admin.html" class="nav-link" style="color: var(--secondary);">Admin Portal</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="tel:9494608182" class="btn-call-header" data-link="phone">
+        <span>📞</span>
+        <span class="btn-phone-text">9494608182</span>
+      </a>
+
+      <a href="https://wa.me/919494608182" class="btn-whatsapp-header" data-link="whatsapp" target="_blank" rel="noopener noreferrer">
+        <span>💬</span>
+        <span>WhatsApp</span>
+      </a>
+
+      <button class="cart-icon-btn" data-action="open-cart" title="View Cart">
+        <span>🛒</span>
+        <span class="cart-badge" style="display: none;">0</span>
+      </button>
+
+      <button class="mobile-toggle" aria-label="Toggle Navigation">☰</button>
+    </div>
+  </header>
+
+  <!-- Reservation Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-subtitle">Dine-in Experience</p>
+        <h1 class="section-title">Reserve Your Table</h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 8px auto 0;">
+          Experience heartfelt hospitality at Saanvi's Kitchen. Reserve your table in advance to avoid waiting queues during peak lunch and dinner hours.
+        </p>
+      </div>
+
+      <div class="form-card">
+        <form id="tableReservationForm">
+
+          <!-- Experience Type / Dine-in Selection -->
+          <div class="form-group" style="margin-bottom: 24px;">
+            <label class="form-label">
+              <span>Dining Experience</span>
+              <span class="required">*</span>
+            </label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 10px 20px; border-radius: 30px; border: 1px solid var(--primary); cursor: pointer;">
+                <input type="radio" name="dining_type" value="Dine-in" checked style="accent-color: var(--primary);">
+                <span>🪑 Dine-in Table Reservation</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <!-- Customer Name -->
+            <div class="form-group">
+              <label for="custName" class="form-label">
+                <span>Customer Name</span>
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="custName" class="form-control" placeholder="e.g. Ramesh Reddy" required>
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="form-group">
+              <label for="custPhone" class="form-label">
+                <span>Mobile Number (10 digits)</span>
+                <span class="required">*</span>
+              </label>
+              <input type="tel" id="custPhone" class="form-control" placeholder="e.g. 9494608182" maxlength="10" required>
+            </div>
+
+            <!-- Number of Guests -->
+            <div class="form-group">
+              <label for="guestCount" class="form-label">
+                <span>Number of Guests</span>
+                <span class="required">*</span>
+              </label>
+              <select id="guestCount" class="form-control" required>
+                <option value="1">1 Person</option>
+                <option value="2" selected>2 Persons</option>
+                <option value="3">3 Persons</option>
+                <option value="4">4 Persons</option>
+                <option value="5">5 Persons</option>
+                <option value="6">6 Persons</option>
+                <option value="8">8 Persons (Family Table)</option>
+                <option value="10">10+ Persons (Large Gathering)</option>
+              </select>
+            </div>
+
+            <!-- Reservation Date -->
+            <div class="form-group">
+              <label for="resDate" class="form-label">
+                <span>Reservation Date</span>
+                <span class="required">*</span>
+              </label>
+              <input type="date" id="resDate" class="form-control" required>
+            </div>
+          </div>
+
+          <!-- Time Slot Selection -->
+          <div class="form-group" style="margin-bottom: 24px;">
+            <label class="form-label">
+              <span>Choose Available Time Slot</span>
+              <span class="required">*</span>
+            </label>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">
+              Lunch Hours (12:00 PM – 03:30 PM) | Dinner Hours (07:00 PM – 10:30 PM)
+            </p>
+            <div class="slot-selection-grid">
+              <input type="radio" name="time_slot" id="slot-1200" value="12:00 PM" class="slot-radio" checked>
+              <label for="slot-1200" class="slot-label">12:00 PM</label>
+
+              <input type="radio" name="time_slot" id="slot-1230" value="12:30 PM" class="slot-radio">
+              <label for="slot-1230" class="slot-label">12:30 PM</label>
+
+              <input type="radio" name="time_slot" id="slot-1300" value="01:00 PM" class="slot-radio">
+              <label for="slot-1300" class="slot-label">01:00 PM</label>
+
+              <input type="radio" name="time_slot" id="slot-1330" value="01:30 PM" class="slot-radio">
+              <label for="slot-1330" class="slot-label">01:30 PM</label>
+
+              <input type="radio" name="time_slot" id="slot-1400" value="02:00 PM" class="slot-radio">
+              <label for="slot-1400" class="slot-label">02:00 PM</label>
+
+              <input type="radio" name="time_slot" id="slot-1900" value="07:00 PM" class="slot-radio">
+              <label for="slot-1900" class="slot-label">07:00 PM</label>
+
+              <input type="radio" name="time_slot" id="slot-1930" value="07:30 PM" class="slot-radio">
+              <label for="slot-1930" class="slot-label">07:30 PM</label>
+
+              <input type="radio" name="time_slot" id="slot-2000" value="08:00 PM" class="slot-radio">
+              <label for="slot-2000" class="slot-label">08:00 PM</label>
+
+              <input type="radio" name="time_slot" id="slot-2030" value="08:30 PM" class="slot-radio">
+              <label for="slot-2030" class="slot-label">08:30 PM</label>
+
+              <input type="radio" name="time_slot" id="slot-2100" value="09:00 PM" class="slot-radio">
+              <label for="slot-2100" class="slot-label">09:00 PM</label>
+
+              <input type="radio" name="time_slot" id="slot-2130" value="09:30 PM" class="slot-radio">
+              <label for="slot-2130" class="slot-label">09:30 PM</label>
+            </div>
+          </div>
+
+          <!-- Special Requests -->
+          <div class="form-group" style="margin-bottom: 24px;">
+            <label for="specialRequests" class="form-label">
+              <span>Special Requests & Seating Preferences (Optional)</span>
+            </label>
+            <textarea id="specialRequests" class="form-control" placeholder="e.g. Window table preferred, baby high chair needed, celebrating birthday..."></textarea>
+          </div>
+
+          <!-- Alert / Error Display -->
+          <div id="bookingAlertBox" style="display: none; padding: 14px; border-radius: 8px; margin-bottom: 20px; font-weight: 600;"></div>
+
+          <!-- Submit Button -->
+          <div style="text-align: center;">
+            <button type="submit" id="submitResBtn" class="btn-primary" style="padding: 14px 40px; font-size: 1.05rem;">
+              <span>Confirm & Submit Table Reservation →</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Help & Direct Contact Note -->
+      <div style="max-width: 650px; margin: 30px auto 0; text-align: center; color: var(--text-muted); font-size: 0.92rem;">
+        <p>Need immediate table booking or a party gathering for more than 20 guests?</p>
+        <p style="margin-top: 4px;">
+          Call our restaurant reception directly at: <a href="tel:9494608182" data-link="phone" style="color: var(--primary); font-weight: 700;">9494608182</a> or chat on <a href="https://wa.me/919494608182" data-link="whatsapp" target="_blank" rel="noopener noreferrer" style="color: var(--whatsapp); font-weight: 700;">WhatsApp</a>.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Cart Slide-out Drawer -->
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <div class="cart-title">Your Order Cart</div>
+      <button class="cart-close-btn" id="closeCartDrawer">&times;</button>
+    </div>
+    <div class="cart-body" id="cartDrawerBody"></div>
+    <div class="cart-footer">
+      <div class="cart-summary-row">
+        <span>Subtotal</span>
+        <span id="cartDrawerSubtotal">₹0</span>
+      </div>
+      <div class="cart-summary-row total">
+        <span>Grand Total</span>
+        <span id="cartDrawerTotal">₹0</span>
+      </div>
+      <div class="cart-actions">
+        <button class="btn-whatsapp-cta" id="drawerWhatsAppOrderBtn" style="width: 100%; justify-content: center;">
+          <span>💬 Order via WhatsApp</span>
+        </button>
+        <a href="checkout.html" class="btn-primary" style="width: 100%; justify-content: center;">
+          <span>Proceed to Checkout</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 data-setting="restaurant_name">SAANVI'S KITCHEN</h3>
+          <p class="tagline" data-setting="tagline">Authentic Taste, Made With Love</p>
+          <p style="font-size: 0.9rem; line-height: 1.6; color: #9ca3af;">
+            Serving genuine South Indian delicacies and royal Hyderabadi dum biryanis in Madiwala, Bengaluru.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Quick Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" class="footer-link">Home</a></li>
+            <li><a href="menu.html" class="footer-link">Our Menu</a></li>
+            <li><a href="reservation.html" class="footer-link">Book a Table (Dine-in)</a></li>
+            <li><a href="checkout.html" class="footer-link">Online Ordering</a></li>
+            <li><a href="order-tracking.html" class="footer-link">Track Order Status</a></li>
+            <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Contact & Location</h4>
+          <div class="footer-contact-item">
+            <span>📞</span>
+            <div>
+              <strong style="color: white; display: block;">Restaurant Contact:</strong>
+              <a href="tel:9494608182" data-link="phone" data-show-number="true">9494608182</a>
+            </div>
+          </div>
+
+          <div class="footer-contact-item">
+            <span>💬</span>
+            <div>
+              <strong style="color: white; display: block;">WhatsApp:</strong>
+              <a href="https://wa.me/919494608182" data-link="whatsapp" target="_blank" rel="noopener noreferrer">+91 9494608182</a>
+            </div>
+          </div>
+
+          <div class="footer-contact-item">
+            <span>📍</span>
+            <div>
+              <strong style="color: white; display: block;">Address:</strong>
+              <span data-setting="address">Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru, Karnataka, India.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 <strong data-setting="restaurant_name">SAANVI'S KITCHEN</strong>. All rights reserved. | Contact: 9494608182</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set min date to today
+      const today = new Date().toISOString().split('T')[0];
+      const dateInput = document.getElementById('resDate');
+      dateInput.min = today;
+      dateInput.value = today;
+
+      const form = document.getElementById('tableReservationForm');
+      const alertBox = document.getElementById('bookingAlertBox');
+      const submitBtn = document.getElementById('submitResBtn');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        alertBox.style.display = 'none';
+
+        const name = document.getElementById('custName').value.trim();
+        const phone = document.getElementById('custPhone').value.trim().replace(/\D/g, '');
+        const guests = document.getElementById('guestCount').value;
+        const resDate = document.getElementById('resDate').value;
+        const timeSlot = document.querySelector('input[name="time_slot"]:checked')?.value;
+        const specialRequests = document.getElementById('specialRequests').value.trim();
+
+        if (phone.length < 10) {
+          alertBox.style.display = 'block';
+          alertBox.style.background = '#fef2f2';
+          alertBox.style.color = '#dc2626';
+          alertBox.style.border = '1px solid #fecaca';
+          alertBox.innerHTML = '⚠️ Please enter a valid 10-digit mobile number.';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Processing Reservation...</span>';
+
+        try {
+          const res = await fetch('/api/reservations', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              customer_name: name,
+              phone,
+              guests,
+              reservation_date: resDate,
+              time_slot: timeSlot,
+              special_requests: specialRequests
+            })
+          });
+
+          const data = await res.json();
+
+          if (res.status === 201 && data.success) {
+            // Save confirmation details in sessionStorage
+            sessionStorage.setItem('lastReservation', JSON.stringify({
+              reservation: data.reservation,
+              restaurant: data.restaurant
+            }));
+
+            window.location.href = `reservation-confirmation.html?code=${data.reservation.reservation_code}`;
+          } else {
+            // Error / double-booking conflict
+            alertBox.style.display = 'block';
+            alertBox.style.background = '#fffbeb';
+            alertBox.style.color = '#b45309';
+            alertBox.style.border = '1px solid #fde68a';
+            alertBox.innerHTML = `⚠️ <strong>${data.message}</strong>`;
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>Confirm & Submit Table Reservation →</span>';
+          }
+        } catch (err) {
+          alertBox.style.display = 'block';
+          alertBox.style.background = '#fef2f2';
+          alertBox.style.color = '#dc2626';
+          alertBox.style.border = '1px solid #fecaca';
+          alertBox.innerHTML = '⚠️ Unable to connect to reservation service. Please check your network or call directly: 9494608182';
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Confirm & Submit Table Reservation →</span>';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

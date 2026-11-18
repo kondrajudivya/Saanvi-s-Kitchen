@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Order Tracking — SAANVI'S KITCHEN</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice-bar">
+    <div>
+      <span>📍 Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru</span>
+    </div>
+    <div style="display: flex; gap: 18px; align-items: center;">
+      <span>📞 Restaurant Contact: <a href="tel:9494608182" data-link="phone">9494608182</a></span>
+      <span>💬 WhatsApp: <a href="https://wa.me/919494608182" data-link="whatsapp" target="_blank" rel="noopener noreferrer">+91 9494608182</a></span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="brand-container">
+      <div class="brand-logo-icon">🍲</div>
+      <div class="brand-info">
+        <a href="index.html" class="brand-title" data-setting="restaurant_name">SAANVI'S KITCHEN</a>
+        <span class="brand-tagline" data-setting="tagline">Authentic Taste, Made With Love</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="menu.html" class="nav-link">Menu & Order</a></li>
+      <li><a href="reservation.html" class="nav-link">Table Reservation</a></li>
+      <li><a href="checkout.html" class="nav-link">Online Checkout</a></li>
+      <li><a href="order-tracking.html" class="nav-link active">Track Order</a></li>
+      <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="tel:9494608182" class="btn-call-header" data-link="phone">
+        <span>📞</span>
+        <span class="btn-phone-text">9494608182</span>
+      </a>
+
+      <a href="https://wa.me/919494608182" class="btn-whatsapp-header" data-link="whatsapp" target="_blank" rel="noopener noreferrer">
+        <span>💬</span>
+        <span>WhatsApp</span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle Navigation">☰</button>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-subtitle">Real-time Kitchen Updates</p>
+        <h1 class="section-title">Track Your Food Order</h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 8px auto 0;">
+          Enter your Order Reference Code below to view real-time preparation and delivery progress.
+        </p>
+      </div>
+
+      <!-- Search Code Box -->
+      <div class="form-card" style="max-width: 600px; padding: 24px; margin-bottom: 30px;">
+        <form id="trackForm" style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <input type="text" id="trackCodeInput" class="form-control" style="flex: 1; min-width: 220px;" placeholder="e.g. SK-ORD-89210" required>
+          <button type="submit" class="btn-primary" style="padding: 12px 24px;">
+            <span>Track Status</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Live Tracking Result Container -->
+      <div class="confirmation-container" id="trackingResultContainer" style="display: none; max-width: 760px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); padding-bottom: 16px; margin-bottom: 24px;">
+          <div>
+            <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">ORDER REFERENCE</span>
+            <strong id="displayOrdCode" style="font-size: 1.3rem; color: var(--primary);">—</strong>
+          </div>
+          <div>
+            <span id="displayOrdBadge" style="background: #e0f2fe; color: #0284c7; padding: 4px 14px; border-radius: 20px; font-weight: 700; font-size: 0.9rem;">
+              Order Placed
+            </span>
+          </div>
+        </div>
+
+        <!-- 4-Stage Stepper -->
+        <div class="tracking-stepper">
+          <div class="tracking-step" id="step-placed">
+            <div class="step-node">1</div>
+            <div class="step-label">Order Placed</div>
+          </div>
+          <div class="tracking-step" id="step-confirmed">
+            <div class="step-node">2</div>
+            <div class="step-label">Kitchen Confirmed</div>
+          </div>
+          <div class="tracking-step" id="step-preparing">
+            <div class="step-node">3</div>
+            <div class="step-label">Cooking & Packing</div>
+          </div>
+          <div class="tracking-step" id="step-ready">
+            <div class="step-node">4</div>
+            <div class="step-label" id="stepReadyLabel">Ready / Delivered</div>
+          </div>
+        </div>
+
+        <!-- Order Information Box -->
+        <div class="details-box" style="text-align: left;">
+          <div class="details-row">
+            <span class="details-label">Order Type</span>
+            <span class="details-val" id="displayOrdType">—</span>
+          </div>
+          <div class="details-row">
+            <span class="details-label">Customer Name</span>
+            <span class="details-val" id="displayCustName">—</span>
+          </div>
+          <div class="details-row">
+            <span class="details-label">Contact Mobile</span>
+            <span class="details-val" id="displayCustPhone">—</span>
+          </div>
+          <div class="details-row">
+            <span class="details-label">Total Amount</span>
+            <span class="details-val" id="displayTotal" style="color: var(--primary); font-size: 1.15rem;">₹0</span>
+          </div>
+        </div>
+
+        <!-- Direct Kitchen Assistance Callout -->
+        <div class="restaurant-contact-callout">
+          <h4>📞 Need Assistance With This Order?</h4>
+          <p>Contact Saanvi's Kitchen reception directly:</p>
+          <a href="tel:9494608182" data-link="phone" style="font-size: 1.2rem; font-weight: 800; color: var(--primary); text-decoration: underline;">
+            📞 9494608182
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 data-setting="restaurant_name">SAANVI'S KITCHEN</h3>
+          <p class="tagline" data-setting="tagline">Authentic Taste, Made With Love</p>
+          <p style="font-size: 0.9rem; line-height: 1.6; color: #9ca3af;">
+            Serving genuine South Indian delicacies and royal Hyderabadi dum biryanis in Madiwala, Bengaluru.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Contact & Location</h4>
+          <div class="footer-contact-item">
+            <span>📞</span>
+            <div>
+              <strong style="color: white; display: block;">Restaurant Contact:</strong>
+              <a href="tel:9494608182" data-link="phone" data-show-number="true">9494608182</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <span>💬</span>
+            <div>
+              <strong style="color: white; display: block;">WhatsApp:</strong>
+              <a href="https://wa.me/919494608182" data-link="whatsapp" target="_blank" rel="noopener noreferrer">+91 9494608182</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <span>📍</span>
+            <div>
+              <strong style="color: white; display: block;">Address:</strong>
+              <span data-setting="address">Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru, Karnataka, India.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 <strong data-setting="restaurant_name">SAANVI'S KITCHEN</strong>. All rights reserved. | Contact: 9494608182</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    async function loadOrderStatus(code) {
+      const resultBox = document.getElementById('trackingResultContainer');
+      try {
+        const res = await fetch(`/api/orders/${encodeURIComponent(code)}`);
+        const data = await res.json();
+
+        if (res.ok && data.success && data.order) {
+          const order = data.order;
+          resultBox.style.display = 'block';
+
+          document.getElementById('displayOrdCode').textContent = order.order_code;
+          document.getElementById('displayOrdType').textContent = order.order_type;
+          document.getElementById('displayCustName').textContent = order.customer_name;
+          document.getElementById('displayCustPhone').textContent = order.customer_phone;
+          document.getElementById('displayTotal').textContent = `₹${order.total_amount}`;
+
+          const status = (order.status || 'placed').toLowerCase();
+          document.getElementById('displayOrdBadge').textContent = `Status: ${status.toUpperCase()}`;
+
+          // Stepper update
+          const s1 = document.getElementById('step-placed');
+          const s2 = document.getElementById('step-confirmed');
+          const s3 = document.getElementById('step-preparing');
+          const s4 = document.getElementById('step-ready');
+
+          [s1, s2, s3, s4].forEach(s => s.className = 'tracking-step');
+
+          if (status === 'placed') {
+            s1.classList.add('active');
+          } else if (status === 'confirmed') {
+            s1.classList.add('completed');
+            s2.classList.add('active');
+          } else if (status === 'preparing') {
+            s1.classList.add('completed');
+            s2.classList.add('completed');
+            s3.classList.add('active');
+          } else if (status === 'ready' || status === 'delivered') {
+            s1.classList.add('completed');
+            s2.classList.add('completed');
+            s3.classList.add('completed');
+            s4.classList.add('completed');
+          }
+        } else {
+          showToast(data.message || 'Order code not found', 'error');
+        }
+      } catch (e) {
+        showToast('Error tracking order status', 'error');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('orderId');
+      if (code) {
+        document.getElementById('trackCodeInput').value = code;
+        loadOrderStatus(code);
+      }
+
+      document.getElementById('trackForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const codeVal = document.getElementById('trackCodeInput').value.trim();
+        if (codeVal) loadOrderStatus(codeVal);
+      });
+    });
+  </script>
+</body>
+</html>
