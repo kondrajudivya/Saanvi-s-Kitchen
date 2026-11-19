@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Operations & Settings — Sanvi Kitchens</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>">
+  <style>
+    .admin-nav-tabs {
+      display: flex;
+      gap: 12px;
+      border-bottom: 2px solid var(--border-light);
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .admin-tab-btn {
+      background: none;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+    .admin-tab-btn.active {
+      color: var(--primary);
+    }
+    .admin-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--primary);
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 0.92rem;
+    }
+    .admin-table th, .admin-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .admin-table th {
+      background: var(--bg-alt);
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .status-select {
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-light);
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body style="background-color: #f8fafc;">
+
+  <!-- Header -->
+  <header class="navbar" style="border-bottom: 2px solid #e2e8f0;">
+    <div class="brand-container">
+      <div class="brand-logo-icon" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%);">⚙️</div>
+      <div class="brand-info">
+        <a href="index.html" class="brand-title">Sanvi Kitchens</a>
+        <span class="brand-tagline" style="color: #64748b;">Admin Operations & Settings Portal</span>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <a href="index.html" class="btn-secondary" style="color: var(--text-dark); border-color: #cbd5e1; font-size: 0.85rem; padding: 6px 14px;">
+        <span>🌐 View Live Website</span>
+      </a>
+      <button id="adminLogoutBtn" class="btn-secondary" style="display: none; background: #fee2e2; border-color: #fca5a5; color: #dc2626; font-size: 0.85rem; padding: 6px 14px;">
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Login Modal Container (If not authenticated) -->
+  <div id="loginModalContainer" style="max-width: 440px; margin: 80px auto; padding: 0 20px;">
+    <div class="form-card" style="box-shadow: var(--shadow-lg);">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="font-size: 2.2rem; margin-bottom: 8px;">🔐</div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-dark);">Admin Authentication</h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Sign in to manage restaurant settings & orders</p>
+      </div>
+
+      <form id="adminLoginForm">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label for="adminUser" class="form-label">Admin Username</label>
+          <input type="text" id="adminUser" class="form-control" value="admin" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="adminPass" class="form-label">Admin Password</label>
+          <input type="password" id="adminPass" class="form-control" value="admin123" required>
+        </div>
+
+        <div id="loginAlertBox" style="display: none; padding: 10px; border-radius: 6px; margin-bottom: 16px; font-size: 0.88rem;"></div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 12px;">
+          <span>Login to Admin Portal</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Authenticated Admin Workspace -->
+  <main class="container" id="adminWorkspace" style="display: none; padding: 30px 20px;">
+    
+    <!-- Admin Tabs -->
+    <div class="admin-nav-tabs">
+      <button class="admin-tab-btn active" data-tab="tab-settings">⚙️ Restaurant Settings</button>
+      <button class="admin-tab-btn" data-tab="tab-orders">📦 Customer Orders (<span id="ordersCount">0</span>)</button>
+      <button class="admin-tab-btn" data-tab="tab-reservations">🪑 Table Reservations (<span id="resCount">0</span>)</button>
+      <button class="admin-tab-btn" data-tab="tab-menu">🍽️ Menu Items (<span id="menuCount">0</span>)</button>
+    </div>
+
+    <!-- TAB 1: RESTAURANT SETTINGS (Section 9 Requirement) -->
+    <div id="tab-settings" class="admin-tab-content">
+      <div class="form-card" style="max-width: 900px; margin: 0 auto;">
+        <div style="border-bottom: 1px solid var(--border-light); padding-bottom: 16px; margin-bottom: 24px;">
+          <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-dark);">
+            Restaurant Brand & Contact Settings
+          </h2>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">
+            Update restaurant identity, regular phone line, WhatsApp line, and complete address. Changes are stored in the database and immediately reflected across all public pages without touching source code.
+          </p>
+        </div>
+
+        <form id="settingsForm">
+          <div class="form-grid">
+            <!-- 1. Restaurant Name -->
+            <div class="form-group">
+              <label for="settingRestaurantName" class="form-label">
+                <span>Restaurant Name</span>
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="settingRestaurantName" class="form-control" required>
+              <small style="color: var(--text-muted); font-size: 0.8rem;">Displayed on homepage hero, navigation, order receipts, and footer.</small>
+            </div>
+
+            <!-- 2. Tagline -->
+            <div class="form-group">
+              <label for="settingTagline" class="form-label">
+                <span>Tagline</span>
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="settingTagline" class="form-control" required>
+              <small style="color: var(--text-muted); font-size: 0.8rem;">Displayed under brand logo and header across all pages.</small>
+            </div>
+
+            <!-- 3. Phone Number -->
+            <div class="form-group">
+              <label for="settingPhoneNumber" class="form-label">
+                <span>Phone Number (Regular Contact Number)</span>
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="settingPhoneNumber" class="form-control" required>
+              <small style="color: var(--text-muted); font-size: 0.8rem;">Regular restaurant phone line for click-to-call (tel:9494608182).</small>
+            </div>
+
+            <!-- 4. WhatsApp Number -->
+            <div class="form-group">
+              <label for="settingWhatsAppNumber" class="form-label">
+                <span>WhatsApp Number</span>
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="settingWhatsAppNumber" class="form-control" required>
+              <small style="color: var(--text-muted); font-size: 0.8rem;">Used for wa.me/919494608182 links and automated WhatsApp ordering.</small>
+            </div>
+
+            <!-- 5. Contact Number Field -->
+            <div class="form-group">
+              <label for="settingContactNumber" class="form-label">
+                <span>Contact Number Field</span>
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="settingContactNumber" class="form-control" required>
+              <small style="color: var(--text-muted); font-size: 0.8rem;">Dedicated contact number field saved in restaurant settings schema.</small>
+            </div>
+
+            <!-- 6. Business Type -->
+            <div class="form-group">
+              <label for="settingBusinessType" class="form-label">
+                <span>Business Type</span>
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="settingBusinessType" class="form-control" required>
+              <small style="color: var(--text-muted); font-size: 0.8rem;">e.g. Dine-in and Online Orders.</small>
+            </div>
+
+            <!-- 7. Complete Address -->
+            <div class="form-group full-width">
+              <label for="settingAddress" class="form-label">
+                <span>Complete Restaurant Address</span>
+                <span class="required">*</span>
+              </label>
+              <textarea id="settingAddress" class="form-control" rows="3" required></textarea>
+              <small style="color: var(--text-muted); font-size: 0.8rem;">Full address displayed on Contact Us, confirmation receipts, and Google Maps search query.</small>
+            </div>
+          </div>
+
+          <div id="settingsAlertBox" style="display: none; padding: 14px; border-radius: 8px; margin-bottom: 20px; font-weight: 600;"></div>
+
+          <div style="display: flex; gap: 14px; align-items: center;">
+            <button type="submit" id="saveSettingsBtn" class="btn-primary" style="padding: 12px 32px;">
+              <span>💾 Save & Sync Restaurant Settings</span>
+            </button>
+            <span id="settingsSaveStatus" style="color: #16a34a; font-weight: 700; display: none;">✓ Saved in database!</span>
+          </div>
+        </form>
+
+        <!-- Live Preview Card -->
+        <div style="margin-top: 36px; background: var(--bg-alt); padding: 20px; border-radius: 12px; border: 1px solid var(--border-light);">
+          <h4 style="font-size: 1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 10px;">
+            🔍 Instant Preview of Active Public Branding
+          </h4>
+          <p style="font-size: 0.92rem; color: var(--text-muted); margin-bottom: 6px;">
+            <strong>Brand:</strong> <span id="previewName">SAANVI'S KITCHEN</span> — "<span id="previewTagline">Authentic Taste, Made With Love</span>"
+          </p>
+          <p style="font-size: 0.92rem; color: var(--text-muted); margin-bottom: 6px;">
+            <strong>Phone Click-to-Call:</strong> <span id="previewPhone">tel:9494608182</span>
+          </p>
+          <p style="font-size: 0.92rem; color: var(--text-muted); margin-bottom: 6px;">
+            <strong>WhatsApp Contact:</strong> <span id="previewWa">https://wa.me/919494608182</span>
+          </p>
+          <p style="font-size: 0.92rem; color: var(--text-muted);">
+            <strong>Address:</strong> <span id="previewAddress">Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: CUSTOMER ORDERS -->
+    <div id="tab-orders" class="admin-tab-content" style="display: none;">
+      <div class="form-card" style="max-width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-dark);">Live Online & Dine-in Orders</h2>
+          <button class="btn-secondary" onclick="loadAdminOrders()" style="font-size: 0.88rem; padding: 6px 16px;">↻ Refresh Orders</button>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Type</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Total</th>
+                <th>Current Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminOrdersTbody">
+              <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Loading orders...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: TABLE RESERVATIONS -->
+    <div id="tab-reservations" class="admin-tab-content" style="display: none;">
+      <div class="form-card" style="max-width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-dark);">Dine-in Table Reservations</h2>
+          <button class="btn-secondary" onclick="loadAdminReservations()" style="font-size: 0.88rem; padding: 6px 16px;">↻ Refresh Bookings</button>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Guest Name</th>
+                <th>Phone</th>
+                <th>Guests</th>
+                <th>Date & Slot</th>
+                <th>Special Requests</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="adminResTbody">
+              <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Loading reservations...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: MENU ITEMS -->
+    <div id="tab-menu" class="admin-tab-content" style="display: none;">
+      <div class="form-card" style="max-width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-dark);">Active Menu Items</h2>
+          <button class="btn-secondary" onclick="loadAdminMenu()" style="font-size: 0.88rem; padding: 6px 16px;">↻ Refresh Menu</button>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Dish Name</th>
+                <th>Category</th>
+                <th>Diet</th>
+                <th>Price</th>
+                <th>Availability</th>
+              </tr>
+            </thead>
+            <tbody id="adminMenuTbody">
+              <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Loading menu items...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    let authToken = sessionStorage.getItem('adminToken');
+
+    // Tab Switching
+    document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
+
+        e.target.classList.add('active');
+        const tabId = e.target.getAttribute('data-tab');
+        document.getElementById(tabId).style.display = 'block';
+
+        if (tabId === 'tab-orders') loadAdminOrders();
+        if (tabId === 'tab-reservations') loadAdminReservations();
+        if (tabId === 'tab-menu') loadAdminMenu();
+      });
+    });
+
+    // Check Authentication
+    function checkAuth() {
+      if (authToken) {
+        document.getElementById('loginModalContainer').style.display = 'none';
+        document.getElementById('adminWorkspace').style.display = 'block';
+        document.getElementById('adminLogoutBtn').style.display = 'inline-flex';
+        loadAdminSettings();
+      } else {
+        document.getElementById('loginModalContainer').style.display = 'block';
+        document.getElementById('adminWorkspace').style.display = 'none';
+        document.getElementById('adminLogoutBtn').style.display = 'none';
+      }
+    }
+
+    // Login Form
+    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const u = document.getElementById('adminUser').value;
+      const p = document.getElementById('adminPass').value;
+      const alertBox = document.getElementById('loginAlertBox');
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: u, password: p })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          authToken = data.token;
+          sessionStorage.setItem('adminToken', authToken);
+          checkAuth();
+        } else {
+          alertBox.style.display = 'block';
+          alertBox.style.background = '#fef2f2';
+          alertBox.style.color = '#dc2626';
+          alertBox.textContent = data.message || 'Invalid credentials.';
+        }
+      } catch (err) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#fef2f2';
+        alertBox.style.color = '#dc2626';
+        alertBox.textContent = 'Server connection error.';
+      }
+    });
+
+    // Logout
+    document.getElementById('adminLogoutBtn').addEventListener('click', () => {
+      authToken = null;
+      sessionStorage.removeItem('adminToken');
+      checkAuth();
+    });
+
+    // Load Settings into Form
+    async function loadAdminSettings() {
+      try {
+        const res = await fetch('/api/settings');
+        const data = await res.json();
+        if (data.success && data.settings) {
+          const s = data.settings;
+          document.getElementById('settingRestaurantName').value = s.restaurant_name;
+          document.getElementById('settingTagline').value = s.tagline;
+          document.getElementById('settingPhoneNumber').value = s.phone_number;
+          document.getElementById('settingWhatsAppNumber').value = s.whatsapp_number;
+          document.getElementById('settingContactNumber').value = s.contact_number;
+          document.getElementById('settingAddress').value = s.address;
+          document.getElementById('settingBusinessType').value = s.business_type;
+
+          updatePreview(s);
+        }
+      } catch (err) {
+        console.error('Failed to load settings:', err);
+      }
+    }
+
+    function updatePreview(s) {
+      document.getElementById('previewName').textContent = s.restaurant_name;
+      document.getElementById('previewTagline').textContent = s.tagline;
+      document.getElementById('previewPhone').textContent = `tel:${s.phone_number}`;
+      document.getElementById('previewWa').textContent = `https://wa.me/91${s.whatsapp_number}`;
+      document.getElementById('previewAddress').textContent = s.address;
+    }
+
+    // Save Settings (PUT /api/settings)
+    document.getElementById('settingsForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const saveBtn = document.getElementById('saveSettingsBtn');
+      const statusSpan = document.getElementById('settingsSaveStatus');
+      const alertBox = document.getElementById('settingsAlertBox');
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<span>Saving Changes...</span>';
+      statusSpan.style.display = 'none';
+      alertBox.style.display = 'none';
+
+      const payload = {
+        restaurant_name: document.getElementById('settingRestaurantName').value.trim(),
+        tagline: document.getElementById('settingTagline').value.trim(),
+        phone_number: document.getElementById('settingPhoneNumber').value.trim(),
+        whatsapp_number: document.getElementById('settingWhatsAppNumber').value.trim(),
+        contact_number: document.getElementById('settingContactNumber').value.trim(),
+        address: document.getElementById('settingAddress').value.trim(),
+        business_type: document.getElementById('settingBusinessType').value.trim()
+      };
+
+      try {
+        const res = await fetch('/api/settings', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          statusSpan.style.display = 'inline';
+          updatePreview(data.settings);
+          showToast('Restaurant settings updated successfully in database!');
+        } else {
+          alertBox.style.display = 'block';
+          alertBox.style.background = '#fef2f2';
+          alertBox.style.color = '#dc2626';
+          alertBox.textContent = data.message || 'Error updating settings.';
+        }
+      } catch (err) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#fef2f2';
+        alertBox.style.color = '#dc2626';
+        alertBox.textContent = 'Server connection error.';
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<span>💾 Save & Sync Restaurant Settings</span>';
+      }
+    });
+
+    // Orders Management
+    async function loadAdminOrders() {
+      const tbody = document.getElementById('adminOrdersTbody');
+      try {
+        const res = await fetch('/api/orders');
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('ordersCount').textContent = data.orders.length;
+          if (data.orders.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">No orders placed yet.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = data.orders.map(o => `
+            <tr>
+              <td><strong>${o.order_code}</strong></td>
+              <td><span style="font-weight: 600;">${o.order_type}</span></td>
+              <td>${o.customer_name}</td>
+              <td>${o.customer_phone}</td>
+              <td><strong>₹${o.total_amount}</strong></td>
+              <td>
+                <select class="status-select" onchange="updateOrderStatus(${o.id}, this.value)">
+                  <option value="placed" ${o.status === 'placed' ? 'selected' : ''}>Placed</option>
+                  <option value="confirmed" ${o.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
+                  <option value="preparing" ${o.status === 'preparing' ? 'selected' : ''}>Preparing</option>
+                  <option value="ready" ${o.status === 'ready' ? 'selected' : ''}>Ready / Out</option>
+                  <option value="delivered" ${o.status === 'delivered' ? 'selected' : ''}>Delivered / Completed</option>
+                  <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                </select>
+              </td>
+              <td>
+                <a href="order-tracking.html?orderId=${o.order_code}" target="_blank" style="color: var(--primary); font-weight: 700; font-size: 0.85rem;">View Track</a>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" style="color: red;">Failed to load orders.</td></tr>';
+      }
+    }
+
+    async function updateOrderStatus(orderId, newStatus) {
+      try {
+        const res = await fetch(`/api/orders/${orderId}/status`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`Order status updated to ${newStatus}`);
+        }
+      } catch (e) {
+        showToast('Error updating status', 'error');
+      }
+    }
+
+    // Reservations Management
+    async function loadAdminReservations() {
+      const tbody = document.getElementById('adminResTbody');
+      try {
+        const res = await fetch('/api/reservations');
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('resCount').textContent = data.reservations.length;
+          if (data.reservations.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">No table reservations booked yet.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = data.reservations.map(r => `
+            <tr>
+              <td><strong>${r.reservation_code}</strong></td>
+              <td>${r.customer_name}</td>
+              <td>${r.phone}</td>
+              <td>${r.guests} Guests</td>
+              <td>${r.reservation_date} at <strong>${r.time_slot}</strong></td>
+              <td><small>${r.special_requests || '—'}</small></td>
+              <td>
+                <span style="background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 12px; font-weight: 700; font-size: 0.82rem;">
+                  ${r.status}
+                </span>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" style="color: red;">Failed to load reservations.</td></tr>';
+      }
+    }
+
+    // Menu Management
+    async function loadAdminMenu() {
+      const tbody = document.getElementById('adminMenuTbody');
+      try {
+        const res = await fetch('/api/menu');
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('menuCount').textContent = data.items.length;
+          tbody.innerHTML = data.items.map(item => `
+            <tr>
+              <td>${item.id}</td>
+              <td><strong>${item.name}</strong></td>
+              <td>Category ${item.category_id}</td>
+              <td>${item.is_veg ? '🟢 Veg' : '🔴 Non-Veg'}</td>
+              <td><strong>₹${item.price}</strong></td>
+              <td><span style="color: #16a34a; font-weight: 700;">Active</span></td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color: red;">Failed to load menu.</td></tr>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+    });
+  </script>
+</body>
+</html>

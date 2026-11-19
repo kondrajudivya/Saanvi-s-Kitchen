@@ -17,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 // Serve frontend static files
 const publicDir = path.join(__dirname, '../public');
 app.use(express.static(publicDir));
+app.use(express.static(path.join(__dirname, '..')));
 
 // Mount API routes
 app.use('/api', apiRoutes);

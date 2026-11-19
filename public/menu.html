@@ -222,17 +222,39 @@
     let allMenuItems = [];
     let activeCategory = 'all';
 
+    const STATIC_BACKUP_MENU = [
+      { id: 1, category_id: 1, name: "Chicken Dum Biryani", description: "Signature fragrant basmati rice layered with tender marinated chicken, saffron, and slow-cooked in traditional dum pot.", price: 190, image_url: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=80", is_veg: 0, is_popular: 1 },
+      { id: 2, category_id: 2, name: "Masala Dosa", description: "Crispy golden fermented crepe stuffed with spiced potato mash, served with coconut chutney, tomato chutney, and piping hot sambar.", price: 90, image_url: "images/masala-dosa.jpg", is_veg: 1, is_popular: 1 },
+      { id: 3, category_id: 1, name: "Mutton Dum Biryani", description: "Succulent pieces of tender baby mutton slow-braised with whole ground spices and aged basmati rice.", price: 280, image_url: "https://images.pexels.com/photos/9738983/pexels-photo-9738983.jpeg?auto=compress&cs=tinysrgb&w=600", is_veg: 0, is_popular: 1 },
+      { id: 4, category_id: 1, name: "Paneer Dum Biryani", description: "Fresh cottage cheese cubes marinated in mint-yogurt masala, layered with spiced saffron rice and fried onions.", price: 170, image_url: "https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?w=500&auto=format&fit=crop&q=80", is_veg: 1, is_popular: 0 },
+      { id: 5, category_id: 2, name: "Ghee Roast Dosa", description: "Crisp dosa roasted in pure desi ghee, served with our signature trio of chutneys and drumstick sambar.", price: 110, image_url: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500&auto=format&fit=crop&q=80", is_veg: 1, is_popular: 1 },
+      { id: 6, category_id: 2, name: "Idli Vada Combo", description: "Two steamed pillowy rice cakes paired with one crispy medu vada, served with ghee, sambar, and coconut chutney.", price: 75, image_url: "https://images.unsplash.com/photo-1741376509047-66dae5df90f9?w=500&auto=format&fit=crop&q=80", is_veg: 1, is_popular: 0 },
+      { id: 7, category_id: 3, name: "Chicken 65", description: "South Indian spicy, deep-fried chicken appetizer infused with curry leaves, crushed garlic, and fiery red chilies.", price: 180, image_url: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=500&auto=format&fit=crop&q=80", is_veg: 0, is_popular: 1 },
+      { id: 8, category_id: 3, name: "Gobi Manchurian", description: "Crispy cauliflower florets tossed in tangy soya-garlic glaze with spring onions and green chilies.", price: 140, image_url: "https://images.pexels.com/photos/35071824/pexels-photo-35071824.jpeg?auto=compress&cs=tinysrgb&w=600", is_veg: 1, is_popular: 0 },
+      { id: 9, category_id: 4, name: "Butter Chicken", description: "Charcoal-grilled chicken simmered in a silky, mildly sweet and rich butter-tomato cream sauce.", price: 220, image_url: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500&auto=format&fit=crop&q=80", is_veg: 0, is_popular: 1 },
+      { id: 10, category_id: 4, name: "Paneer Butter Masala", description: "Fresh cottage cheese cubes folded into a luxurious cashew and tomato gravy infused with kasuri methi.", price: 180, image_url: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&auto=format&fit=crop&q=80", is_veg: 1, is_popular: 1 },
+      { id: 11, category_id: 5, name: "Butter Naan", description: "Soft leavened tandoor-baked flatbread brushed generously with fresh butter.", price: 45, image_url: "images/butter-naan.jpg", is_veg: 1, is_popular: 0 },
+      { id: 12, category_id: 5, name: "Tandoori Roti", description: "Whole wheat crisp flatbread baked in the clay oven.", price: 30, image_url: "https://images.pexels.com/photos/13084520/pexels-photo-13084520.jpeg?auto=compress&cs=tinysrgb&w=600", is_veg: 1, is_popular: 0 },
+      { id: 13, category_id: 6, name: "South Indian Filter Coffee", description: "Authentic chicory-blend decoction frothed with boiled whole milk, served in traditional dabarah and tumbler.", price: 40, image_url: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop&q=80", is_veg: 1, is_popular: 1 },
+      { id: 14, category_id: 6, name: "Gulab Jamun (2 Pcs)", description: "Warm golden milk-solid dumplings soaked in rose and green cardamom flavored sugar syrup.", price: 60, image_url: "images/gulab-jamun.jpg", is_veg: 1, is_popular: 1 }
+    ];
+
     async function fetchMenu() {
       try {
         const res = await fetch('/api/menu');
-        const data = await res.json();
-        if (data.success) {
-          allMenuItems = data.items;
-          renderMenu();
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.success && Array.isArray(data.items) && data.items.length > 0) {
+            allMenuItems = data.items;
+            renderMenu();
+            return;
+          }
         }
       } catch (e) {
-        console.error('Failed to fetch menu:', e);
+        console.warn('Backend API offline (e.g. static host); using verified baseline menu:', e);
       }
+      allMenuItems = STATIC_BACKUP_MENU;
+      renderMenu();
     }
 
     function renderMenu() {
