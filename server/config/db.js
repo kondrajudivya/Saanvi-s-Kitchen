@@ -24,7 +24,7 @@ const fallbackFile = path.join(__dirname, 'fallback_store.json');
 const defaultData = {
   settings: {
     id: 1,
-    restaurant_name: "SAANVI'S KITCHEN",
+    restaurant_name: "Sanvi Kitchens",
     tagline: "Authentic Taste, Made With Love",
     phone_number: "9494608182",
     whatsapp_number: "9494608182",
@@ -62,7 +62,7 @@ const defaultData = {
       name: "Masala Dosa",
       description: "Crispy golden fermented crepe stuffed with spiced potato mash, served with coconut chutney, tomato chutney, and piping hot sambar.",
       price: 90.00,
-      image_url: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=80",
+      image_url: "images/masala-dosa.jpg",
       is_veg: 1,
       is_available: 1,
       is_popular: 1
@@ -73,7 +73,7 @@ const defaultData = {
       name: "Mutton Dum Biryani",
       description: "Succulent pieces of tender baby mutton slow-braised with whole ground spices and aged basmati rice.",
       price: 280.00,
-      image_url: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop&q=80",
+      image_url: "https://images.pexels.com/photos/9738983/pexels-photo-9738983.jpeg?auto=compress&cs=tinysrgb&w=600",
       is_veg: 0,
       is_available: 1,
       is_popular: 1
@@ -106,7 +106,7 @@ const defaultData = {
       name: "Idli Vada Combo",
       description: "Two steamed pillowy rice cakes paired with one crispy medu vada, served with ghee, sambar, and coconut chutney.",
       price: 75.00,
-      image_url: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=80",
+      image_url: "https://images.unsplash.com/photo-1741376509047-66dae5df90f9?w=500&auto=format&fit=crop&q=80",
       is_veg: 1,
       is_available: 1,
       is_popular: 0
@@ -128,7 +128,7 @@ const defaultData = {
       name: "Gobi Manchurian",
       description: "Crispy cauliflower florets tossed in tangy soya-garlic glaze with spring onions and green chilies.",
       price: 140.00,
-      image_url: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=500&auto=format&fit=crop&q=80",
+      image_url: "https://images.pexels.com/photos/35071824/pexels-photo-35071824.jpeg?auto=compress&cs=tinysrgb&w=600",
       is_veg: 1,
       is_available: 1,
       is_popular: 0
@@ -161,7 +161,7 @@ const defaultData = {
       name: "Butter Naan",
       description: "Soft leavened tandoor-baked flatbread brushed generously with fresh butter.",
       price: 45.00,
-      image_url: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500&auto=format&fit=crop&q=80",
+      image_url: "images/butter-naan.jpg",
       is_veg: 1,
       is_available: 1,
       is_popular: 0
@@ -172,7 +172,7 @@ const defaultData = {
       name: "Tandoori Roti",
       description: "Whole wheat crisp flatbread baked in the clay oven.",
       price: 30.00,
-      image_url: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500&auto=format&fit=crop&q=80",
+      image_url: "https://images.pexels.com/photos/13084520/pexels-photo-13084520.jpeg?auto=compress&cs=tinysrgb&w=600",
       is_veg: 1,
       is_available: 1,
       is_popular: 0
@@ -194,7 +194,7 @@ const defaultData = {
       name: "Gulab Jamun (2 Pcs)",
       description: "Warm golden milk-solid dumplings soaked in rose and green cardamom flavored sugar syrup.",
       price: 60.00,
-      image_url: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop&q=80",
+      image_url: "images/gulab-jamun.jpg",
       is_veg: 1,
       is_available: 1,
       is_popular: 1
@@ -313,6 +313,13 @@ async function initDatabase() {
         );
       }
       console.log('[DB] Seeded initial menu items.');
+    } else {
+      // Synchronize brand name and updated dish images in existing MySQL tables
+      await pool.query("UPDATE restaurant_settings SET restaurant_name = ? WHERE id = 1", [defaultData.settings.restaurant_name]);
+      for (const item of defaultData.menu_items) {
+        await pool.query("UPDATE menu_items SET image_url = ?, name = ?, description = ? WHERE id = ?", [item.image_url, item.name, item.description, item.id]);
+      }
+      console.log('[DB] Synchronized restaurant settings & dish photography.');
     }
 
     return true;

@@ -45,13 +45,13 @@ app.use((err, req, res, next) => {
 // Bootstrapping sequence
 async function startServer() {
   console.log('----------------------------------------------------');
-  console.log("🌟 Starting SAANVI'S KITCHEN Server Application...");
+  console.log("🌟 Starting SANVI KITCHENS Server Application...");
   console.log('----------------------------------------------------');
 
   await db.initDatabase();
 
   const server = app.listen(PORT, () => {
-    console.log(`🚀 Saanvi's Kitchen server is running on http://localhost:${PORT}`);
+    console.log(`🚀 Sanvi Kitchens server is running on http://localhost:${PORT}`);
     console.log(`📞 Restaurant Contact: 9494608182 (Click-to-call: tel:9494608182)`);
     console.log(`💬 WhatsApp Ordering: https://wa.me/919494608182`);
     console.log(`📍 Address: Annapoorneswari Nilayam, Old Post Office Road, Maruthi Nagar, Madiwala, Bengaluru`);

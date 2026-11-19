@@ -5,7 +5,7 @@
 
 const APP_CONFIG = {
   defaultSettings: {
-    restaurant_name: "SAANVI'S KITCHEN",
+    restaurant_name: "Sanvi Kitchens",
     tagline: "Authentic Taste, Made With Love",
     phone_number: "9494608182",
     whatsapp_number: "9494608182",
@@ -47,7 +47,7 @@ function applySettingsToDOM() {
   });
 
   // 2. Update page title if appropriate
-  if (document.title.includes("Saanvi's Kitchen") || document.title.includes("SAANVI'S KITCHEN")) {
+  if (document.title.includes("Saanvi") || document.title.includes("Sanvi") || document.title.includes("SAANVI") || document.title.includes("SANVI")) {
     document.title = `${currentSettings.restaurant_name} — ${currentSettings.tagline}`;
   }
 
@@ -341,12 +341,27 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge();
   renderCartDrawer();
 
-  // Mobile menu toggle
+  // Mobile menu toggle & click-outside auto-close
   const mobileToggle = document.querySelector('.mobile-toggle');
   const navLinks = document.querySelector('.nav-links');
   if (mobileToggle && navLinks) {
-    mobileToggle.addEventListener('click', () => {
+    mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
       navLinks.classList.toggle('active');
+    });
+
+    // Close when clicking any nav link
+    navLinks.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !mobileToggle.contains(e.target)) {
+        navLinks.classList.remove('active');
+      }
     });
   }
 

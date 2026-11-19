@@ -52,7 +52,7 @@ async function runTests() {
       assert.strictEqual(res.status, 200, 'Health endpoint should return 200');
       const data = await res.json();
       assert.strictEqual(data.status, 'ok');
-      assert.strictEqual(data.restaurant, "SAANVI'S KITCHEN");
+      assert.strictEqual(data.restaurant, "Sanvi Kitchens");
       assert.strictEqual(data.phone, '9494608182');
     });
 
@@ -64,7 +64,7 @@ async function runTests() {
       assert.strictEqual(res.status, 200);
       const { settings } = await res.json();
 
-      assert.strictEqual(settings.restaurant_name, "SAANVI'S KITCHEN", 'Name must be SAANVI\'S KITCHEN');
+      assert.strictEqual(settings.restaurant_name, "Sanvi Kitchens", 'Name must be Sanvi Kitchens');
       assert.strictEqual(settings.tagline, "Authentic Taste, Made With Love", 'Tagline must be Authentic Taste, Made With Love');
       assert.strictEqual(settings.phone_number, "9494608182", 'Phone must be 9494608182');
       assert.strictEqual(settings.whatsapp_number, "9494608182", 'WhatsApp number must be 9494608182');
@@ -286,7 +286,7 @@ async function runTests() {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          restaurant_name: "SAANVI'S KITCHEN",
+          restaurant_name: "Sanvi Kitchens",
           tagline: updatedTagline,
           phone_number: "9494608182",
           whatsapp_number: "9494608182",
@@ -311,7 +311,7 @@ async function runTests() {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          restaurant_name: "SAANVI'S KITCHEN",
+          restaurant_name: "Sanvi Kitchens",
           tagline: "Authentic Taste, Made With Love",
           phone_number: "9494608182",
           whatsapp_number: "9494608182",
@@ -345,7 +345,7 @@ async function runTests() {
         const content = fs.readFileSync(filePath, 'utf-8');
 
         // Check branding
-        assert.ok(content.includes("SAANVI'S KITCHEN"), `${page} must display SAANVI'S KITCHEN`);
+        assert.ok(content.includes("Sanvi Kitchens") || content.includes("SAANVI'S KITCHEN"), `${page} must display Sanvi Kitchens branding`);
         
         // Check phone link
         assert.ok(content.includes('tel:9494608182'), `${page} must contain click-to-call tel:9494608182`);

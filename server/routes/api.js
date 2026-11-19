@@ -19,7 +19,7 @@ function generateCode(prefix) {
 router.get('/health', async (req, res) => {
   res.json({
     status: 'ok',
-    restaurant: "SAANVI'S KITCHEN",
+    restaurant: "Sanvi Kitchens",
     tagline: 'Authentic Taste, Made With Love',
     phone: '9494608182',
     db_connected: db.isDbConnected(),
